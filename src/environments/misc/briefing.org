@@ -1,0 +1,51 @@
+* Gemeenteraadsverkiezingen
+** TivoliVredenburg
+** 3 sets
+*** Rob Tripp aan tafel met gasten
+**** AR
+***** Banners
+***** Texten
+*** Twee grote schermen, Dionne Stax presenteerd daar de uitslagen
+**** Twee losse SDI's
+**** Meer info voor Dionne op Autocue
+*** Uitslagen alleen op scherm
+*** Sleepwet referendum
+**** AR
+** Debat
+
+* Dataparser
+
+** Uitbreiden met referendum data
+
+** Offerte afgeven voor ombouw naar C#
+
+*** Porten naar C#
+
+*** Referendum
+
+*** Bovenstaande splitsen
+
+* Support op locatie
+
+** Afhankelijk van tarief
+
+** 
+
+Eigen hardware
+
+Offerte
+1. Software van vorig jaar + referendum
+1a. unit testing?
+2. Ombouw naar C# + referendum
+3. Inlezen in software van Kenneth
+
+
+eind januari graphics
+
+5 maart deadline
+14 maart repetitie
+15 maart repetitie
+
+Gerard stuur z.s.m. ANP docs zodat wij een preciezere offerte kunnen afgeven
+
+Blijven bij SQlite

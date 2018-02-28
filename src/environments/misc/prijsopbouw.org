@@ -1,0 +1,23 @@
+* Prijsopbouw Offerte
+** Dataparser
+fixed price, maar wel d.m.v. modules flexibel samen te stellen
+*** Huidige software porten naar C#
+United heeft de wens om de huidige Dataparser te porten naar C#. Met een port verstaan we een C# applicatie die exact de zelfde specificaties heeft als de huidige Java versie.
+De verder beschreven modules zijn niet afhankelijk van de keuze om deze module wel of niet af te nemen.
+**** 34 uur
+*** Aanpassingen aan huidige software
+**** 11 uur
+*** Referendum
+**** 10 uur
+*** Tests
+**** Unit tests
+Om de integriteit van de verschillende bouwblokken te waarborgen, onderhoud te vergemakkelijken en overdraagbaarheid te vergroten adviseren we het om Unit tests te implementeren. Hierbij streven we om de meest kritieke onderdelen van de Dataparser in een geautomatiseerde testomgeving onder te brengen.
+***** 6 uur
+**** End to end tests
+De end-to-end test, testen de gehele applicatie, waarbij we met behulp van de tools die het ANP ons biedt een situatie te simuleren die zo dicht mogelijk tegen de situatie van de daadwerkelijke verkiezingsavond aan staat.
+***** 6 uur
+** Verdere software werkzaamheden
+*** Volgens 'normaal' tarief, geen ureninschatting voor afgeven, we kunnen ze wel om die inschatting vragen indien nodig/gewenst
+** Support op locatie
+*** Volgens normaal tarief
+*** Support op afstand/bereikbaarheidsdienst volgens ander tarief
