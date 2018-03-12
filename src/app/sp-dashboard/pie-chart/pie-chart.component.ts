@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-
 import { Chart } from 'chart.js';
-
-import { SPDataService } from '../sp-data.service';
-
+import { SPDataService, SPList } from '../sp-data.service';
+import { GlobalFilterService } from '../global-filter.service';
 import { DataComponent } from '../data-component';
 import { BSChart } from '../BSChart';
 
@@ -18,8 +16,9 @@ export class PieChartComponent extends DataComponent implements OnInit {
 
     @ViewChild('canvas') canvas: ElementRef;
     
-    constructor(spData: SPDataService) {
-        super(spData);
+    constructor(spData: SPDataService, globalFilter: GlobalFilterService) {
+        super(spData, globalFilter);
+        
         this.subscribe("Testlist");
     }
 
@@ -47,10 +46,11 @@ export class PieChartComponent extends DataComponent implements OnInit {
         this.chart = new BSChart(this.canvas, chartObject);
     }
 
-    protected onNewData(data: any): void
+    protected onNewData(): void
     {
-        let itemsGrouped: Map<string, any> = this.groupBy(data.value, item => item.Title);
-        this.chart.data.datasets[0].data = data.value.map(item => item.Number);
+        let data = this.lists['Testlist'];
+        let itemsGrouped: Map<string, any> = this.groupBy(data, item => item.Title);
+        this.chart.data.datasets[0].data = data.map(item => item.Number);
         this.chart.data.labels = Array.from(itemsGrouped.keys());
         this.chart.update();
     }

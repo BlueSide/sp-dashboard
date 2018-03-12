@@ -69,6 +69,47 @@ export class MockDataService {
             "Datetime": null,
             "Choice": "Choice 1",
             "MultiChoice": null,
+            "Boolean": false,
+            "Number": 70,
+            "Currency": null,
+            "URL": null,
+            "UserId": null,
+            "UserStringId": null,
+            "MultiPersonId": null,
+            "MultiPersonStringId": null,
+            "AverageRating": null,
+            "RatingCount": null,
+            "RatedByStringId": null,
+            "LikesCount": null,
+            "LikedByStringId": null,
+            "Site_x0020_URL": "https://bluesidenl.sharepoint.com/sites/dev/dashboard/subsite-test/",
+            "Site_x0020_title": null,
+            "ID": 6023,
+            "Modified": "2017-12-13T17:51:34Z",
+            "Created": "2017-11-24T09:09:11Z",
+            "AuthorId": 9,
+            "EditorId": 9,
+            "OData__UIVersionString": "1.0",
+            "Attachments": false,
+            "GUID": "c3b9e8c0-bac3-490f-b756-3df3dbab50a9"
+        },{
+            "odata.type": "SP.Data.TestlistListItem",
+            "odata.id": "2d9bca33-d9c9-43f4-95d6-af37914662cc",
+            "odata.etag": "\"22\"",
+            "odata.editLink": "Web/Lists(guid'3f891819-5635-47ff-81c1-992754c7859d')/Items(6023)",
+            "FileSystemObjectType": 0,
+            "Id": 6023,
+            "ServerRedirectedEmbedUri": null,
+            "ServerRedirectedEmbedUrl": "",
+            "Title": "Subsite test",
+            "Text": null,
+            "Integer": 90,
+            "ContentTypeId": "0x01008DBF3136F91A674284F05535CB9FAB51",
+            "ComplianceAssetId": null,
+            "Note": null,
+            "Datetime": null,
+            "Choice": "Choice 1",
+            "MultiChoice": null,
             "Boolean": true,
             "Number": 70,
             "Currency": null,
@@ -314,9 +355,8 @@ export class MockDataService {
     constructor() { }
 
     getList(listTitle: string): Observable<any> {
-        return new Observable((observer) => {
+        return new Observable(observer => {
             observer.next(this.mockList);
-            observer.complete();
         });
     }
 

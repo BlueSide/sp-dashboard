@@ -7,49 +7,75 @@ import 'rxjs/add/operator/catch';
 import { MockDataService } from "./mock-data.service";
 import { environment } from '../../environments/environment';
 
+const USE_MOCK_DATA: boolean = false;
+const LIVE_UPDATE_INTERVAL: number = 100000; //milliseconds
+
 @Injectable()
 export class SPDataService
 {
 
-    private url: string = 'https://bluesidenl.sharepoint.com/sites/dev/dashboard/';
-    private targetSite: string = 'https://bluesidenl.sharepoint.com/sites/dev/dashboard/';
-    private targetRoot: string = 'https://bluesidenl.sharepoint.com/';
-    private listCache: SPList[];
+    private url: string = environment.SharePointUrl;
+    
+    private subscriptions: Subscription[] = [];
+    private listCache: any;
+    private observable: Observable<any>;
 
+    public useMockData: boolean = environment.mockData;
     public token: string;
 
     constructor(
         private http: HttpClient,
         private mockData: MockDataService
-    ) {}
+    )
+    {
+        if(!environment.production && !this.useMockData)
+        {
+            // When not in production we need a token to avoid CORS violation
+            this.getToken().subscribe((response) => {
+                this.token = response.token;
+                this.startLiveUpdate();
+            });
+        }
+        else
+        {
+            this.startLiveUpdate();
+        }
+    }
 
-    getList(listTitle: string): Observable<any> {
-        const url: string = `${this.url}_api/web/lists/GetByTitle('${listTitle}')/items`;
-        return new Observable((observer) => {
-            if(!environment.production)
-            {
-                return this.getToken().subscribe(
-                    response => {
-                        this.token = response.token;
-                        
-                        console.log("Live data");
-                        this.http.get<any>(url, this.makeOptions()).subscribe((response) => observer.next(response));
-                    },
-                    error => {
-                        console.log("Mock data");
-                        this.mockData.getList(listTitle).subscribe((response) => observer.next(response));
-                    }
-                );
-            }
-            else
-            {
-                this.http.get<any>(url, this.makeOptions()).subscribe((response) => observer.next(response));
-            }
+    private startLiveUpdate()
+    {
+        let timer = Observable.timer(0, LIVE_UPDATE_INTERVAL).subscribe((ticks) => {
+            this.update();
+            
         });
+    }
 
-
-        
-        
+    public update()
+    {
+        for(let subscription of this.subscriptions)
+        {
+            let sub = this.getList(subscription.listName).subscribe((data) => {
+                let spList: SPList = {
+                    name: subscription.listName,
+                    data: data
+                };
+                subscription.callback(spList);
+            });
+        }
+    }
+    
+    public addSubscription(listName: string, callback:(any) => void): void
+    {
+        this.subscriptions.push({listName: listName, callback: callback});
+    }
+    
+    public getList(listTitle: string): Observable<any> {
+        if(this.useMockData)
+        {
+            //console.log("Mocking " + listTitle);
+            return this.mockData.getList(listTitle);
+        }
+        return this.http.get<any>(`${this.url}/lists/getByTitle('${listTitle}')/items`, this.makeOptions());
     }
 
     getToken(): Observable<any> {
@@ -77,6 +103,12 @@ export class SPDataService
         return {headers: headers};
     }    
 
+}
+
+interface Subscription
+{
+    listName: string;
+    callback: (any) => void;
 }
 
 //TODO: Specify this more strictly or make a class of it
